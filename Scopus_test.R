@@ -24,3 +24,10 @@ mecenames$affiliation <- "alberta"
 ## for this function we need the API key as a variable
 api_key = get_api_key()
 mece_authors <- idByAuthor(mecenames, api_key)
+
+## Normally: replace any missing IDs
+## For today's purposes, we will create our ID vector by omitting the missing IDs
+id <- mece_authors$id[!is.na(mece_authors$id)]
+
+## Download the bnibliographic collection for these authors
+papers <- retrievalByAuthorID(id = id, remove.duplicated = TRUE, country = FALSE)
