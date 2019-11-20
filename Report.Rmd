@@ -1,0 +1,25 @@
+---
+title: "Analysis of Department of Mechanical Engineering Output"
+author: "Alison Henry"
+date: "20/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Main findings about the collection
+
+```{r Descriptive Analysis, echo=TRUE, comment=NA}
+#options(width=160)
+results <- biblioAnalysis(M)
+summary(results, k=10, pause=F, width=130)
+plot(x=results, k=10, pause=F)
+```
+## Most Cited References
+
+```{r Most cited references,  comment=NA}
+CR <- citations(M, field = "article", sep = ";")
+cbind(CR$Cited[1:20])
+```

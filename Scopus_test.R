@@ -30,4 +30,10 @@ mece_authors <- idByAuthor(mecenames, api_key)
 id <- mece_authors$id[!is.na(mece_authors$id)]
 
 ## Download the bnibliographic collection for these authors
-papers <- retrievalByAuthorID(id = id, remove.duplicated = TRUE, country = FALSE)
+papers <- retrievalByAuthorID(id = id, api_key = api_key)
+M <- papers$M
+
+## We can use M with the bibliometrix package to get a nice overview of this collection - see Report.Rmd
+
+
+
