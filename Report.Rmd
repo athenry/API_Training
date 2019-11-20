@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Main findings about the collection
 
+Let's take a look at the summary of findings about this collection, including average numbers of publications per authors and citations per publication. 
 ```{r Descriptive Analysis, echo=TRUE, comment=NA}
 #options(width=160)
 results <- biblioAnalysis(M)
