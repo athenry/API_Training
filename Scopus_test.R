@@ -1,17 +1,20 @@
 ## testing  access to the Scopus API
 
-## Step one: load needed packages
+## Install and load needed packages
+## install.packages("tidyverse")
+## install.packages("bibliometrix")
+## install.packages("rscopus")
 library(tidyverse)
 library(bibliometrix)
 library(rscopus)
 
-## Step two: Set your API key
+## Set your API key
 set_api_key("875146d79ec70b39b9fcbc099b07e321")
 
-##test that it exists. If so, this function will return TRUE.
+## Test that the key is in. If so, this function will return TRUE.
 have_api_key()
 
-## Step three: try a search to see if your access works
+## Try a search to see if your access works
 UA_info <- get_affiliation_info(affil_name = "University of Alberta")
 
 ## Read in our list of authors
@@ -33,7 +36,7 @@ id <- mece_authors$id[!is.na(mece_authors$id)]
 papers <- retrievalByAuthorID(id = id, api_key = api_key)
 M <- papers$M
 
-## We can use M with the bibliometrix package to get a nice overview of this collection - see Report.Rmd
+## We can now use the bibliometrix package to get a nice overview of this collection - see Report.Rmd
 
 
 

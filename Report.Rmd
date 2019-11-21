@@ -2,16 +2,66 @@
 title: "Analysis of Department of Mechanical Engineering Output"
 author: "Alison Henry"
 date: "20/11/2019"
-output: html_document
+output:
+  html_document:
+    toc: yes
+  html_notebook:
+    theme: lumen
+    toc: yes
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(rscopus)
+library(tidyverse)
+library(bibliometrix)
+library(prettydoc)
 ```
+# Bibliographic Collection
+**Data source**:   Scopus (http://www.scopus.com)
+
+**Document Type**: Articles, letters, review and proceedings papers
+
+**Authors**: Author names taken from the University of Alberta Department of Mechanical Engineering Website
+
+**Query date**:    November, 2019
+
+# Data load
+
+```{r data retrieval, include=FALSE}
+## Set your API key
+set_api_key("875146d79ec70b39b9fcbc099b07e321")
+
+## Read in our list of authors
+mecenames <- read.csv("mecenames.csv", header = TRUE)
+
+## add in a column for the affiliatiomn
+mecenames$affiliation <- "alberta"
+
+## Get the Scopus IDs of these authors
+## for this function we need the API key as a variable
+api_key = get_api_key()
+mece_authors <- idByAuthor(mecenames, api_key)
+
+## Normally: replace any missing IDs
+## For today's purposes, we will create our ID vector by omitting the missing IDs
+id <- mece_authors$id[!is.na(mece_authors$id)]
+
+## Download the bnibliographic collection for these authors
+papers <- retrievalByAuthorID(id = id, api_key = api_key)
+M <- papers$M
+
+## We can now use the bibliometrix package to get a nice overview of this collection - see Report.Rmd
+```
+From our list of author names, we used the Scopus API to retrieve Researcher IDs, then made another API call to download the documents associated with these IDs. This resulted in a set of `r length(M)` de-duplicated papers. 
 
 ## Main findings about the collection
 
-Let's take a look at the summary of findings about this collection, including average numbers of publications per authors and citations per publication. 
+Let's take a look at the summary of findings about this collection, including average numbers of publications per author and citations per publication. 
+
 ```{r Descriptive Analysis, echo=TRUE, comment=NA}
 #options(width=160)
 results <- biblioAnalysis(M)
