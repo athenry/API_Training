@@ -1,6 +1,6 @@
 ## testing  access to the Scopus API
 
-## Step one: install needed packages
+## Step one: load needed packages
 library(tidyverse)
 library(bibliometrix)
 library(rscopus)
