@@ -29,7 +29,7 @@ library(prettydoc)
 
 **Query date**:    November, 2019
 
-# Data load
+## Data load
 
 ```{r data retrieval, include=FALSE}
 ## Set your API key
@@ -53,8 +53,6 @@ id <- mece_authors$id[!is.na(mece_authors$id)]
 ## Download the bnibliographic collection for these authors
 papers <- retrievalByAuthorID(id = id, api_key = api_key)
 M <- papers$M
-
-## We can now use the bibliometrix package to get a nice overview of this collection - see Report.Rmd
 ```
 From our list of author names, we used the Scopus API to retrieve Researcher IDs, then made another API call to download the documents associated with these IDs. This resulted in a set of `r length(M)` de-duplicated papers. 
 
@@ -68,8 +66,10 @@ results <- biblioAnalysis(M)
 summary(results, k=10, pause=F, width=130)
 plot(x=results, k=10, pause=F)
 ```
+
 ## Most Cited References
 
+These are the most frequently cited manuscripts in this collection.
 ```{r Most cited references,  comment=NA}
 CR <- citations(M, field = "article", sep = ";")
 cbind(CR$Cited[1:20])
